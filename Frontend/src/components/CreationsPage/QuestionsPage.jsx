@@ -42,43 +42,115 @@ const QuestionsPage = (props) => {
    return (
       <>
          {showSpinner && (
-            <div
-               className="border border-3 rounded-5 d-flex align-items-center justify-content-center"
-               style={{ height: "25rem" }}
-            >
+            <div style={{
+               border: '2px solid rgba(31, 110, 235, 0.3)',
+               borderRadius: 'var(--radius-lg)',
+               display: 'flex',
+               alignItems: 'center',
+               justifyContent: 'center',
+               height: '300px',
+               backgroundColor: 'rgba(31, 110, 235, 0.05)',
+               marginTop: 'var(--spacing-lg)'
+            }}>
                <Spinner />
             </div>
          )}
          {!showSpinner && questions !== undefined && (
-                         <ul className="list-group overflow-y-auto" style={{ height: "25rem" }}>
-                {questions.map((item) => (
-                   <li className="list-group-item text-start">
-                     <div className="bg-light px-5 py-3 d-flex flex-column">
-                        <div className="fs-4">
-                           <span className="fw-bold fst-italic">
-                              {"Q-" + item.questionNo + ". "}
-                           </span>
-                           <span className="fs-5">{item.question}</span>
+            <div style={{
+               marginTop: 'var(--spacing-lg)',
+               borderRadius: 'var(--radius-lg)',
+               border: '2px solid rgba(31, 110, 235, 0.3)',
+               overflow: 'hidden'
+            }}>
+               <ul className="list-group" style={{
+                  overflow: 'auto',
+                  maxHeight: '500px',
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0
+               }}>
+                  {questions.map((item, idx) => (
+                     <li key={idx} style={{
+                        borderBottom: '1px solid rgba(31, 110, 235, 0.2)',
+                        padding: 'var(--spacing-lg)',
+                        backgroundColor: idx % 2 === 0 ? 'rgba(31, 110, 235, 0.02)' : 'transparent'
+                     }}>
+                        <div style={{
+                           display: 'flex',
+                           flexDirection: 'column',
+                           gap: 'var(--spacing-md)'
+                        }}>
+                           <div>
+                              <span style={{
+                                 fontSize: 'clamp(0.95rem, 1.5vw, 1.05rem)',
+                                 fontWeight: 700,
+                                 color: '#79c0ff'
+                              }}>
+                                 Q-{item.questionNo}.
+                              </span>
+                              <span style={{
+                                 fontSize: 'clamp(0.95rem, 1.5vw, 1rem)',
+                                 color: '#f0f6fc',
+                                 marginLeft: 'var(--spacing-sm)'
+                              }}>
+                                 {item.question}
+                              </span>
+                           </div>
+                           <div>
+                              <p style={{
+                                 fontSize: 'clamp(0.85rem, 1.2vw, 0.95rem)',
+                                 fontWeight: 600,
+                                 color: '#8b949e',
+                                 margin: '0 0 var(--spacing-sm) 0',
+                                 textTransform: 'uppercase'
+                              }}>
+                                 Options:
+                              </p>
+                              <ul style={{
+                                 paddingLeft: 'var(--spacing-lg)',
+                                 margin: 0,
+                                 listStyle: 'disc'
+                              }}>
+                                 {[1, 2, 3, 4].map((optNum) => (
+                                    <li key={optNum} style={{
+                                       fontSize: 'clamp(0.9rem, 1.3vw, 0.95rem)',
+                                       color: '#8b949e',
+                                       marginBottom: 'var(--spacing-xs)',
+                                       paddingLeft: 'var(--spacing-sm)'
+                                    }}>
+                                       {item[`option${optNum}`]}
+                                    </li>
+                                 ))}
+                              </ul>
+                           </div>
+                           <div style={{
+                              padding: 'var(--spacing-md)',
+                              borderRadius: 'var(--radius-lg)',
+                              backgroundColor: 'rgba(63, 185, 80, 0.1)',
+                              border: '1px solid rgba(63, 185, 80, 0.3)'
+                           }}>
+                              <p style={{
+                                 fontSize: 'clamp(0.8rem, 1.2vw, 0.85rem)',
+                                 fontWeight: 600,
+                                 color: '#8b949e',
+                                 margin: '0 0 var(--spacing-xs) 0',
+                                 textTransform: 'uppercase'
+                              }}>
+                                 ✓ Correct Answer:
+                              </p>
+                              <span style={{
+                                 fontSize: 'clamp(0.95rem, 1.3vw, 1rem)',
+                                 fontWeight: 600,
+                                 color: '#3fb950'
+                              }}>
+                                 Option {item.correct}
+                              </span>
+                           </div>
                         </div>
-                        <div>
-                           <p className="fs-5 fw-bold mb-1">Options: </p>
-                        </div>
-                        <div className="px-5 mx-3">
-                           <ul style={{ listStyle: "disc" }}>
-                              <li>{item.option1}</li>
-                              <li>{item.option2}</li>
-                              <li>{item.option3}</li>
-                              <li>{item.option4}</li>
-                           </ul>
-                        </div>
-                        <div>
-                           <p className="fs-5 fw-bold m-0 d-inline">Correct Answer: </p>
-                           <span className="px-1">option- {item.correct}</span>
-                        </div>
-                     </div>
-                  </li>
-               ))}
-            </ul>
+                     </li>
+                  ))}
+               </ul>
+            </div>
          )}
       </>
    );

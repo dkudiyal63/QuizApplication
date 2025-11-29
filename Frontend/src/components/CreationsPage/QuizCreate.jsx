@@ -177,34 +177,50 @@ const QuizCreate = () => {
             pauseOnHover
          />
          <div>
-            <section className="container" style={{ paddingTop: 'var(--spacing-2xl)' }}>
+            <section className="container" style={{ paddingTop: 'var(--spacing-lg)', paddingBottom: 'var(--spacing-lg)' }}>
                <div className="card">
-                  <h2 className="card-title mb-4">Create Quiz</h2>
+                  <h2 className="card-title" style={{
+                     fontSize: 'clamp(1.75rem, 5vw, 2.25rem)',
+                     fontWeight: 800,
+                     marginBottom: 'var(--spacing-lg)'
+                  }}>✏️ Create Your Quiz</h2>
                   <form className="w-100">
                      <div className="row">
                         <div className="col-md-6">
                            <div className="quiz">
-                              <label htmlFor="title">Title</label>
+                              <label htmlFor="title" style={{
+                                 fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                                 fontWeight: 600
+                              }}>Quiz Title</label>
                               <input type="text" name="title" onChange={dataChange} required={true} />
                            </div>
                         </div>
                         <div className="col-md-6">
                            <div className="quiz">
-                              <label>Subject</label>
+                              <label style={{
+                                 fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                                 fontWeight: 600
+                              }}>Subject</label>
                               <input type="text" name="subject" onChange={dataChange} required={true} />
                            </div>
                         </div>
                      </div>
-                     <div className="row mt-3">
+                     <div className="row" style={{ marginTop: 'var(--spacing-lg)' }}>
                         <div className="col-md-6">
                            <div className="quiz">
-                              <label htmlFor="duration">Duration (minutes)</label>
+                              <label htmlFor="duration" style={{
+                                 fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                                 fontWeight: 600
+                              }}>Duration (minutes)</label>
                               <input type="number" name="duration" onChange={dataChange} required={true} />
                            </div>
                         </div>
                         <div className="col-md-6">
                            <div className="quiz">
-                              <label htmlFor="difficulty">Difficulty</label>
+                              <label htmlFor="difficulty" style={{
+                                 fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                                 fontWeight: 600
+                              }}>Difficulty Level</label>
                               <input type="text" name="difficulty" onChange={dataChange} required={true} />
                            </div>
                         </div>
@@ -212,29 +228,52 @@ const QuizCreate = () => {
                   </form>
                </div>
             </section>
-            <hr className="m-auto w-75 justify-content-center my-5 border border-2 border-dark rounded-5" />
-            <div className="container mt-4">
-               <h3>Questions</h3>
+            <div style={{
+               margin: 'var(--spacing-xl) auto',
+               width: '80%',
+               borderTop: '2px solid #1f6feb',
+               opacity: 0.3
+            }} />
+            <div className="container" style={{ paddingTop: 'var(--spacing-lg)', paddingBottom: 'var(--spacing-md)' }}>
+               <h3 style={{
+                  fontSize: 'clamp(1.5rem, 4vw, 1.75rem)',
+                  fontWeight: 700,
+                  margin: 0
+               }}>📝 Questions</h3>
             </div>
             {question !== undefined && (
-               <section className="container mt-3" style={{ height: "30rem" }}>
+               <section className="container" style={{ paddingBottom: 'var(--spacing-lg)' }}>
                   <form
-                     className="w-100 pt-3"
+                     className="w-100"
                      onSubmit={(event) => {
                         event.preventDefault();
                      }}
                   >
-                     <ul className="list-group" style={{ listStyle: 'none' }}>
+                     <ul className="list-group" style={{ listStyle: 'none', padding: 0, gap: 'var(--spacing-md)' }}>
                         {question.map((item, index) => (
-                           <li className="list-group-item" style={{ listStyle: 'none' }}>
-                               <div className="d-flex align-items-center w-100" style={{ gap: '12px' }}>
-                                  <span className="m-0" style={{ whiteSpace: 'nowrap', fontSize: '1.25rem', fontWeight: 600 }}>Q-{index + 1}</span>
+                           <li className="list-group-item" style={{
+                              listStyle: 'none',
+                              padding: 'var(--spacing-lg)',
+                              borderRadius: 'var(--radius-lg)',
+                              border: '1px solid rgba(31, 110, 235, 0.3)',
+                              backgroundColor: 'rgba(31, 110, 235, 0.05)'
+                           }}>
+                               <div className="d-flex align-items-center w-100" style={{ gap: 'var(--spacing-md)' }}>
+                                  <span className="m-0" style={{
+                                     whiteSpace: 'nowrap',
+                                     fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+                                     fontWeight: 700,
+                                     color: '#1f6feb'
+                                  }}>Q-{index + 1}</span>
                                   <div className="d-flex align-items-center" style={{ width: '100%', position: 'relative' }}>
                                      <input
                                         type="text"
                                         name="question"
-                                        className="ms-2"
-                                        style={{ width: '100%', paddingRight: '40px' }}
+                                        style={{
+                                           width: '100%',
+                                           paddingRight: '40px',
+                                           fontSize: 'clamp(0.95rem, 1.5vw, 1rem)'
+                                        }}
                                         placeholder="Enter Question"
                                         required={true}
                                         value={question[index].question}
@@ -245,7 +284,14 @@ const QuizCreate = () => {
                                      <button
                                         aria-label="Remove question"
                                         className="btn btn-secondary"
-                                        style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)' }}
+                                        style={{
+                                           position: 'absolute',
+                                           right: '0.5rem',
+                                           top: '50%',
+                                           transform: 'translateY(-50%)',
+                                           padding: '0.25rem 0.5rem',
+                                           fontSize: '1.25rem'
+                                        }}
                                         onClick={(event) => {
                                            removeQuestion(event, index);
                                         }}
@@ -254,17 +300,35 @@ const QuizCreate = () => {
                                      </button>
                                   </div>
                                </div>
-                              <div className="ms-5 ps-4 mt-3">
-                                 <h5>Options</h5>
+                              <div className="ms-5 ps-3" style={{ marginTop: 'var(--spacing-lg)' }}>
+                                 <h5 style={{
+                                    fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                                    fontWeight: 600,
+                                    marginBottom: 'var(--spacing-md)',
+                                    color: '#79c0ff'
+                                 }}>Options</h5>
                                  <div>
-                                      <ul style={{ paddingLeft: 0 }}>
+                                      <ul style={{ paddingLeft: 0, margin: 0 }}>
                                        {[...Array(4)].map((_, innerIndex) => (
-                                          <li className="py-2" style={{ listStyle: 'none' }}>
+                                          <li className="py-2" style={{
+                                             listStyle: 'none',
+                                             display: 'flex',
+                                             alignItems: 'center',
+                                             gap: '0.5rem'
+                                          }}>
+                                             <span style={{
+                                                minWidth: '1.75rem',
+                                                fontSize: 'clamp(0.85rem, 1.2vw, 0.95rem)',
+                                                color: '#8b949e'
+                                             }}>○ {innerIndex + 1}:</span>
                                              <input
                                                 type="text"
                                                 name={`option${innerIndex + 1}`}
                                                 placeholder={`option ${innerIndex + 1}`}
-                                                 style={{ width: '40%' }}
+                                                style={{
+                                                   width: '50%',
+                                                   fontSize: 'clamp(0.9rem, 1.3vw, 0.95rem)'
+                                                }}
                                                 required={true}
                                                 value={question[index][`option${innerIndex + 1}`]}
                                                 onChange={(event) => {
@@ -275,14 +339,25 @@ const QuizCreate = () => {
                                        ))}
                                     </ul>
                                  </div>
-                                 <div className="d-flex mt-3" style={{ gap: '24px' }}>
-                                    <div className="d-flex align-items-center" style={{ gap: '8px' }}>
-                                       <h5 className="m-0">Correct Option</h5>
+                                 <div className="d-flex mt-4" style={{
+                                    gap: 'var(--spacing-xl)',
+                                    flexWrap: 'wrap'
+                                 }}>
+                                    <div className="d-flex align-items-center" style={{ gap: 'var(--spacing-sm)' }}>
+                                       <label style={{
+                                          margin: 0,
+                                          fontSize: 'clamp(0.85rem, 1.2vw, 0.95rem)',
+                                          fontWeight: 600,
+                                          whiteSpace: 'nowrap'
+                                       }}>✓ Correct:</label>
                                        <input
                                           type="number"
                                           name="correct"
                                           placeholder="1-4"
-                                          className="ms-2"
+                                          style={{
+                                             width: '80px',
+                                             fontSize: 'clamp(0.9rem, 1.3vw, 0.95rem)'
+                                          }}
                                           required={true}
                                           value={question[index].correct}
                                           onChange={(event) => {
@@ -290,13 +365,21 @@ const QuizCreate = () => {
                                           }}
                                        />
                                     </div>
-                                    <div className="d-flex align-items-center" style={{ gap: '8px' }}>
-                                       <h5 className="m-0">Points</h5>
+                                    <div className="d-flex align-items-center" style={{ gap: 'var(--spacing-sm)' }}>
+                                       <label style={{
+                                          margin: 0,
+                                          fontSize: 'clamp(0.85rem, 1.2vw, 0.95rem)',
+                                          fontWeight: 600,
+                                          whiteSpace: 'nowrap'
+                                       }}>⭐ Points:</label>
                                        <input
                                           type="number"
                                           name="points"
                                           placeholder="Enter points"
-                                          className="ms-2"
+                                          style={{
+                                             width: '100px',
+                                             fontSize: 'clamp(0.9rem, 1.3vw, 0.95rem)'
+                                          }}
                                           required={true}
                                           value={question[index].points}
                                           onChange={(event) => {
@@ -309,12 +392,26 @@ const QuizCreate = () => {
                            </li>
                         ))}
                      </ul>
-                     <div className="d-flex justify-content-center p-4">
-                        <button className="btn btn-success me-5" type="submit" onClick={formSubmit}>
-                           Create Quiz
+                     <div className="d-flex justify-content-center" style={{
+                        padding: 'var(--spacing-xl) 0',
+                        gap: 'var(--spacing-lg)',
+                        flexWrap: 'wrap'
+                     }}>
+                        <button className="btn btn-success" type="submit" onClick={formSubmit} style={{
+                           padding: '0.75rem 1.5rem',
+                           fontSize: 'clamp(0.95rem, 1.5vw, 1rem)',
+                           fontWeight: 600,
+                           borderRadius: 'var(--radius-lg)'
+                        }}>
+                           ✓ Create Quiz
                         </button>
-                        <button className="btn btn-primary" onClick={addMore}>
-                           Add more
+                        <button className="btn btn-primary" onClick={addMore} style={{
+                           padding: '0.75rem 1.5rem',
+                           fontSize: 'clamp(0.95rem, 1.5vw, 1rem)',
+                           fontWeight: 600,
+                           borderRadius: 'var(--radius-lg)'
+                        }}>
+                           + Add Question
                         </button>
                      </div>
                   </form>
@@ -322,9 +419,17 @@ const QuizCreate = () => {
             )}
          </div>
          {quizId !== undefined && (
-            <div className="login-form ">
-               <div className="bg-body-secondary w-25 border border-3 rounded-5">
-                  <div className="d-flex justify-content-end pt-4 pe-4">
+            <div className="login-form">
+               <div style={{
+                  maxWidth: '420px',
+                  width: '90%',
+                  backgroundColor: '#0d1117',
+                  borderRadius: 'var(--radius-2xl)',
+                  border: '2px solid #1f6feb',
+                  boxShadow: '0 20px 60px rgba(31, 110, 235, 0.4)',
+                  animation: 'slideInDown 0.4s ease-out'
+               }}>
+                  <div className="d-flex justify-content-end" style={{ padding: 'var(--spacing-lg)' }}>
                      <button
                         type="button"
                         className="btn-close"
@@ -332,16 +437,54 @@ const QuizCreate = () => {
                         onClick={(e) => {
                            e.preventDefault();
                            setQuizId();
-
                            h("/Creations");
                         }}
                      ></button>
                   </div>
-                  <div className="d-flex flex-column justify-content-center pb-5 align-items-center  ">
-                     <h4 className="fs-2 text-success fst-italic font-monospace">Quiz Id:</h4>
-                     <p className=" fs-2 text-success">{quizId}</p>
+                  <div className="d-flex flex-column justify-content-center align-items-center" style={{
+                     paddingBottom: 'var(--spacing-xl)',
+                     paddingLeft: 'var(--spacing-lg)',
+                     paddingRight: 'var(--spacing-lg)'
+                  }}>
+                     <h4 style={{
+                        fontSize: 'clamp(1.5rem, 4vw, 1.75rem)',
+                        fontWeight: 700,
+                        marginBottom: 'var(--spacing-md)',
+                        color: '#3fb950',
+                        textAlign: 'center'
+                     }}>✓ Quiz Created Successfully!</h4>
+                     <p style={{
+                        fontSize: 'clamp(0.9rem, 1.5vw, 0.95rem)',
+                        color: '#8b949e',
+                        marginBottom: 'var(--spacing-lg)',
+                        textAlign: 'center'
+                     }}>Share your quiz ID with others to let them take it</p>
+                     <div style={{
+                        backgroundColor: 'rgba(63, 185, 80, 0.1)',
+                        border: '2px solid #3fb950',
+                        borderRadius: 'var(--radius-lg)',
+                        padding: 'var(--spacing-lg)',
+                        marginBottom: 'var(--spacing-lg)',
+                        minWidth: '200px',
+                        textAlign: 'center'
+                     }}>
+                        <p style={{
+                           fontSize: 'clamp(0.8rem, 1.2vw, 0.85rem)',
+                           color: '#8b949e',
+                           margin: '0 0 var(--spacing-sm) 0',
+                           textTransform: 'uppercase',
+                           fontWeight: 600
+                        }}>Quiz ID</p>
+                        <p style={{
+                           fontSize: 'clamp(1.5rem, 3vw, 1.75rem)',
+                           fontWeight: 700,
+                           color: '#3fb950',
+                           margin: 0,
+                           fontFamily: 'monospace'
+                        }}>{quizId}</p>
+                     </div>
                      <button
-                        className="btn btn-info px-4"
+                        className="btn btn-info"
                         onClick={(e) => {
                            e.preventDefault();
                            navigator.clipboard.writeText(quizId);
@@ -349,8 +492,14 @@ const QuizCreate = () => {
                               autoClose: 2000,
                            });
                         }}
+                        style={{
+                           padding: '0.75rem 1.5rem',
+                           fontSize: 'clamp(0.9rem, 1.3vw, 0.95rem)',
+                           fontWeight: 600,
+                           borderRadius: 'var(--radius-lg)'
+                        }}
                      >
-                        Copy
+                        📋 Copy ID
                      </button>
                   </div>
                </div>

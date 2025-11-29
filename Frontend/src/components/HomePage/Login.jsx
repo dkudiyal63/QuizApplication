@@ -113,7 +113,8 @@ const Login = (props) => {
                left: 0,
                width: '100%',
                height: '100vh',
-               background: 'rgba(0, 0, 0, 0.8)',
+               background: 'rgba(0, 0, 0, 0.85)',
+               backdropFilter: 'blur(5px)',
                display: 'flex',
                alignItems: 'center',
                justifyContent: 'center',
@@ -121,11 +122,22 @@ const Login = (props) => {
                padding: 'var(--spacing-2xl) var(--spacing-lg)',
                overflowY: 'auto'
             }}>
-               <div className="card" style={{ maxWidth: '480px', width: '100%' }}>
+               <div className="card" style={{
+                  maxWidth: '480px',
+                  width: '100%',
+                  borderRadius: 'var(--radius-2xl)',
+                  borderTop: '3px solid #1f6feb',
+                  boxShadow: '0 20px 60px rgba(31, 110, 235, 0.3)',
+                  animation: 'slideInDown 0.4s ease-out',
+                  padding: 'var(--spacing-xl)'
+               }}>
                   {!showRegister ? (
                      <form onSubmit={(e) => login(e)}>
                         <div className="d-flex justify-content-between align-items-center mb-4">
-                           <h3 className="mb-0">Welcome Back</h3>
+                           <div>
+                              <h3 className="mb-1" style={{ fontSize: 'clamp(1.5rem, 3vw, 1.75rem)', fontWeight: 800 }}>Welcome Back</h3>
+                              <p style={{ color: '#8b949e', margin: 0, fontSize: 'clamp(0.875rem, 1.5vw, 0.95rem)' }}>Sign in to your account</p>
+                           </div>
                            <button
                               type="button"
                               className="btn btn-secondary"
@@ -140,42 +152,86 @@ const Login = (props) => {
                                  setEmail("");
                                  setPassword("");
                               }}
+                              style={{
+                                 padding: '0.5rem',
+                                 minWidth: 'auto',
+                                 fontSize: '1.25rem'
+                              }}
                            >
                               ✕
                            </button>
                         </div>
                         
                         {loginError && (
-                           <div className="mb-3" style={{ color: '#ef4444', fontSize: 'var(--font-size-sm)' }}>
-                              {loginError}
+                           <div className="mb-3" style={{
+                              color: '#f85149',
+                              fontSize: 'clamp(0.875rem, 1.5vw, 0.95rem)',
+                              padding: 'var(--spacing-md)',
+                              background: 'rgba(248, 81, 73, 0.1)',
+                              borderRadius: 'var(--radius-lg)',
+                              border: '1px solid rgba(248, 81, 73, 0.3)',
+                              lineHeight: 1.5
+                           }}>
+                              ⚠️ {loginError}
                            </div>
                         )}
                         
-                        <div className="mb-3">
-                           <label className="form-label">Email address</label>
+                        <div className="mb-4">
+                           <label className="form-label" style={{
+                              fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                              fontWeight: 600,
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.5px',
+                              color: '#f0f6fc'
+                           }}>Email Address</label>
                            <input
                               type="email"
                               className="form-control"
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
-                              placeholder="Enter your email"
+                              placeholder="you@example.com"
+                              style={{
+                                 padding: 'var(--spacing-md) var(--spacing-lg)',
+                                 borderRadius: 'var(--radius-lg)',
+                                 fontSize: 'clamp(0.95rem, 1.5vw, 1rem)'
+                              }}
                            />
                         </div>
                         
                         <div className="mb-4">
-                           <label className="form-label">Password</label>
-                           <div className="d-flex">
+                           <div className="d-flex justify-content-between align-items-center mb-2">
+                              <label className="form-label" style={{
+                                 fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                                 fontWeight: 600,
+                                 textTransform: 'uppercase',
+                                 letterSpacing: '0.5px',
+                                 color: '#f0f6fc',
+                                 margin: 0
+                              }}>Password</label>
+                           </div>
+                           <div className="d-flex" style={{ gap: '0.5rem' }}>
                               <input
                                  type={passVisible ? "text" : "password"}
                                  className="form-control"
                                  value={password}
                                  onChange={(e) => setPassword(e.target.value)}
-                                 placeholder="Enter your password"
+                                 placeholder="••••••••"
+                                 style={{
+                                    padding: 'var(--spacing-md) var(--spacing-lg)',
+                                    borderRadius: 'var(--radius-lg)',
+                                    flex: 1,
+                                    fontSize: 'clamp(0.95rem, 1.5vw, 1rem)'
+                                 }}
                               />
                               <button
                                  type="button"
-                                 className="btn btn-secondary ms-2"
+                                 className="btn btn-secondary"
                                  onClick={() => setPassVisible(!passVisible)}
+                                 style={{
+                                    padding: 'var(--spacing-md) var(--spacing-lg)',
+                                    minWidth: 'auto',
+                                    fontSize: '1.1rem'
+                                 }}
                               >
                                  {passVisible ? '👁️' : '👁️‍🗨️'}
                               </button>
@@ -184,26 +240,45 @@ const Login = (props) => {
 
                         {showSpinner && (
                            <div className="text-center mb-3">
-                              <div className="spinner"></div>
+                              <div className="spinner" style={{ margin: '0 auto' }}></div>
                            </div>
                         )}
                         
-                        <button type="submit" className="btn btn-primary w-100 mb-3">
-                           Login
+                        <button type="submit" className="btn btn-primary w-100 mb-3" style={{
+                           padding: '0.875rem',
+                           fontSize: 'clamp(0.95rem, 1.5vw, 1rem)',
+                           fontWeight: 600,
+                           borderRadius: 'var(--radius-lg)',
+                           marginTop: 'var(--spacing-md)'
+                        }}>
+                           🔐 Sign In
                         </button>
                         
                         <button
                            type="button"
                            className="btn btn-secondary w-100"
-                           onClick={() => setShowRegister(true)}
+                           onClick={(e) => {
+                              e.preventDefault();
+                              setShowRegister(true);
+                              setLoginError("");
+                           }}
+                           style={{
+                              padding: '0.875rem',
+                              fontSize: 'clamp(0.95rem, 1.5vw, 1rem)',
+                              fontWeight: 600,
+                              borderRadius: 'var(--radius-lg)'
+                           }}
                         >
-                           Need an account? Register
+                           Don't have an account? Register →
                         </button>
                      </form>
                   ) : (
                      <form onSubmit={(e) => register(e)}>
                         <div className="d-flex justify-content-between align-items-center mb-4">
-                           <h3 className="mb-0">Create Account</h3>
+                           <div>
+                              <h3 className="mb-1" style={{ fontSize: 'clamp(1.5rem, 3vw, 1.75rem)', fontWeight: 800 }}>Create Account</h3>
+                              <p style={{ color: '#8b949e', margin: 0, fontSize: 'clamp(0.875rem, 1.5vw, 0.95rem)' }}>Join our learning community</p>
+                           </div>
                            <button
                               type="button"
                               className="btn btn-secondary"
@@ -218,63 +293,122 @@ const Login = (props) => {
                                  setEmail("");
                                  setPassword("");
                               }}
+                              style={{
+                                 padding: '0.5rem',
+                                 minWidth: 'auto',
+                                 fontSize: '1.25rem'
+                              }}
                            >
                               ✕
                            </button>
                         </div>
                         
                         {loginError && (
-                           <div className="mb-3" style={{ color: '#ef4444', fontSize: 'var(--font-size-sm)' }}>
-                              {loginError}
+                           <div className="mb-3" style={{
+                              color: '#f85149',
+                              fontSize: 'clamp(0.875rem, 1.5vw, 0.95rem)',
+                              padding: 'var(--spacing-md)',
+                              background: 'rgba(248, 81, 73, 0.1)',
+                              borderRadius: 'var(--radius-lg)',
+                              border: '1px solid rgba(248, 81, 73, 0.3)',
+                              lineHeight: 1.5
+                           }}>
+                              ⚠️ {loginError}
                            </div>
                         )}
                         
-                        <div className="d-flex gap-2 mb-3">
+                        <div className="d-flex gap-2 mb-4">
                            <div className="flex-1">
-                              <label className="form-label">First Name</label>
+                              <label className="form-label" style={{
+                                 fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                                 fontWeight: 600,
+                                 textTransform: 'uppercase',
+                                 letterSpacing: '0.5px'
+                              }}>First Name</label>
                               <input
                                  type="text"
                                  className="form-control"
                                  onChange={(e) => setFirstName(e.target.value)}
-                                 placeholder="First name"
+                                 placeholder="First"
+                                 style={{
+                                    padding: 'var(--spacing-md) var(--spacing-lg)',
+                                    borderRadius: 'var(--radius-lg)',
+                                    fontSize: 'clamp(0.95rem, 1.5vw, 1rem)'
+                                 }}
                               />
                            </div>
                            <div className="flex-1">
-                              <label className="form-label">Last Name</label>
+                              <label className="form-label" style={{
+                                 fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                                 fontWeight: 600,
+                                 textTransform: 'uppercase',
+                                 letterSpacing: '0.5px'
+                              }}>Last Name</label>
                               <input
                                  type="text"
                                  className="form-control"
                                  onChange={(e) => setLastName(e.target.value)}
-                                 placeholder="Last name"
+                                 placeholder="Last"
+                                 style={{
+                                    padding: 'var(--spacing-md) var(--spacing-lg)',
+                                    borderRadius: 'var(--radius-lg)',
+                                    fontSize: 'clamp(0.95rem, 1.5vw, 1rem)'
+                                 }}
                               />
                            </div>
                         </div>
                         
-                        <div className="mb-3">
-                           <label className="form-label">Email address</label>
+                        <div className="mb-4">
+                           <label className="form-label" style={{
+                              fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                              fontWeight: 600,
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.5px'
+                           }}>Email Address</label>
                            <input
                               type="email"
                               className="form-control"
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
-                              placeholder="Enter your email"
+                              placeholder="you@example.com"
+                              style={{
+                                 padding: 'var(--spacing-md) var(--spacing-lg)',
+                                 borderRadius: 'var(--radius-lg)',
+                                 fontSize: 'clamp(0.95rem, 1.5vw, 1rem)'
+                              }}
                            />
                         </div>
                         
                         <div className="mb-4">
-                           <label className="form-label">Password</label>
-                           <div className="d-flex">
+                           <label className="form-label" style={{
+                              fontSize: 'clamp(0.8rem, 1.2vw, 0.875rem)',
+                              fontWeight: 600,
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.5px'
+                           }}>Password</label>
+                           <div className="d-flex" style={{ gap: '0.5rem' }}>
                               <input
                                  type={passVisible ? "text" : "password"}
                                  className="form-control"
                                  value={password}
                                  onChange={(e) => setPassword(e.target.value)}
-                                 placeholder="Create a password"
+                                 placeholder="••••••••"
+                                 style={{
+                                    padding: 'var(--spacing-md) var(--spacing-lg)',
+                                    borderRadius: 'var(--radius-lg)',
+                                    flex: 1,
+                                    fontSize: 'clamp(0.95rem, 1.5vw, 1rem)'
+                                 }}
                               />
                               <button
                                  type="button"
-                                 className="btn btn-secondary ms-2"
+                                 className="btn btn-secondary"
                                  onClick={() => setPassVisible(!passVisible)}
+                                 style={{
+                                    padding: 'var(--spacing-md) var(--spacing-lg)',
+                                    minWidth: 'auto',
+                                    fontSize: '1.1rem'
+                                 }}
                               >
                                  {passVisible ? '👁️' : '👁️‍🗨️'}
                               </button>
@@ -283,20 +417,36 @@ const Login = (props) => {
                         
                         {showSpinner && (
                            <div className="text-center mb-3">
-                              <div className="spinner"></div>
+                              <div className="spinner" style={{ margin: '0 auto' }}></div>
                            </div>
                         )}
                         
-                        <button type="submit" className="btn btn-primary w-100 mb-3">
-                           Register
+                        <button type="submit" className="btn btn-primary w-100 mb-3" style={{
+                           padding: '0.875rem',
+                           fontSize: 'clamp(0.95rem, 1.5vw, 1rem)',
+                           fontWeight: 600,
+                           borderRadius: 'var(--radius-lg)',
+                           marginTop: 'var(--spacing-md)'
+                        }}>
+                           ✓ Create Account
                         </button>
                         
                         <button
                            type="button"
                            className="btn btn-secondary w-100"
-                           onClick={() => setShowRegister(false)}
+                           onClick={(e) => {
+                              e.preventDefault();
+                              setShowRegister(false);
+                              setLoginError("");
+                           }}
+                           style={{
+                              padding: '0.875rem',
+                              fontSize: 'clamp(0.95rem, 1.5vw, 1rem)',
+                              fontWeight: 600,
+                              borderRadius: 'var(--radius-lg)'
+                           }}
                         >
-                           Already have an account? Login
+                           Already have an account? Sign In →
                         </button>
                      </form>
                   )}

@@ -126,191 +126,305 @@ const QuizStart = (props) => {
    return (
       <>
          {showSpinner && (
-            <div
-               className="d-flex flex-column justify-content-center align-items-center"
-               style={{ height: "100vh" }}
-            >
+            <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: '100vh' }}>
                <>
                   <div>
                      <Spinner />
                   </div>
                   <div>
-                     <p className="pt-2 fs-3 fst-italic">{loadingText}</p>
+                     <p style={{
+                        marginTop: 'var(--spacing-md)',
+                        fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
+                        fontStyle: 'italic',
+                        color: '#79c0ff'
+                     }}>
+                        {loadingText}
+                     </p>
                   </div>
                </>
             </div>
          )}
          {!showSpinner && questions !== null && (
-            <div>
-               {" "}
-               <div
-                  className="quiz-start bg-secondary-subtle text-dark"
-                  style={{ minHeight: "75vh" }}
-               >
-                  <div className="d-flex justify-content-between me-5 pt-3 fs-3 px-3">
-                     <div className="pt-3 px-3">
-                        <span className="fst-italic text-primary fw-bold me-2">Points :</span>
-                        <span>{questions[index].points}</span>
+            <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #0d1117 0%, #161b22 100%)' }}>
+               <div style={{
+                  padding: 'var(--spacing-lg)',
+                  minHeight: '75vh',
+                  display: 'flex',
+                  flexDirection: 'column'
+               }}>
+                  <div className="d-flex justify-content-between align-items-start" style={{
+                     marginBottom: 'var(--spacing-lg)',
+                     gap: 'var(--spacing-lg)',
+                     flexWrap: 'wrap'
+                  }}>
+                     <div style={{
+                        padding: 'var(--spacing-md) var(--spacing-lg)',
+                        borderRadius: 'var(--radius-lg)',
+                        border: '2px solid #79c0ff',
+                        backgroundColor: 'rgba(121, 192, 255, 0.05)'
+                     }}>
+                        <span style={{
+                           fontSize: 'clamp(0.85rem, 1.3vw, 0.95rem)',
+                           fontWeight: 600,
+                           color: '#8b949e',
+                           textTransform: 'uppercase'
+                        }}>
+                           Points:
+                        </span>
+                        <span style={{
+                           fontSize: 'clamp(1.25rem, 2vw, 1.5rem)',
+                           fontWeight: 700,
+                           color: '#79c0ff',
+                           marginLeft: 'var(--spacing-sm)'
+                        }}>
+                           {questions[index].points}
+                        </span>
                      </div>
-                     <div className="text-end ">
-                        <p className="fst-italic m-0 text-danger fw-bold">Time-Left : </p>
-                        {`${Math.floor(timeLeft / 60)} : ${timeLeft % 60 < 10 ? "0" : ""}${
-                           timeLeft % 60
-                        }`}
+                     <div style={{
+                        padding: 'var(--spacing-md) var(--spacing-lg)',
+                        borderRadius: 'var(--radius-lg)',
+                        border: '2px solid #f85149',
+                        backgroundColor: 'rgba(248, 81, 73, 0.05)',
+                        textAlign: 'right'
+                     }}>
+                        <p style={{
+                           margin: 0,
+                           fontSize: 'clamp(0.85rem, 1.3vw, 0.95rem)',
+                           fontWeight: 600,
+                           color: '#8b949e',
+                           textTransform: 'uppercase'
+                        }}>
+                           Time Left
+                        </p>
+                        <p style={{
+                           fontSize: 'clamp(1.5rem, 3vw, 1.75rem)',
+                           fontWeight: 700,
+                           color: '#f85149',
+                           margin: 0,
+                           fontFamily: 'monospace'
+                        }}>
+                           {`${Math.floor(timeLeft / 60)}:${timeLeft % 60 < 10 ? '0' : ''}${timeLeft % 60}`}
+                        </p>
                      </div>
                   </div>
-                  <div
-                     style={{ top: "3rem", width: "70%", margin: "auto", position: "relative" }}
-                     className="d-flex justify-content-center flex-column"
-                  >
-                     <div>
-                        <div className="fs-3 fst-italic" style={{ width: "fit-content" }}>
-                           Q- {index + 1}:
+
+                  <div style={{
+                     flex: 1,
+                     maxWidth: '800px',
+                     margin: '0 auto',
+                     width: '100%',
+                     display: 'flex',
+                     flexDirection: 'column',
+                     justifyContent: 'center'
+                  }}>
+                     <div style={{
+                        padding: 'var(--spacing-lg)',
+                        borderRadius: 'var(--radius-lg)',
+                        border: '2px solid rgba(31, 110, 235, 0.3)',
+                        backgroundColor: 'rgba(31, 110, 235, 0.05)',
+                        marginBottom: 'var(--spacing-xl)'
+                     }}>
+                        <div style={{
+                           fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                           fontWeight: 600,
+                           color: '#79c0ff',
+                           marginBottom: 'var(--spacing-sm)'
+                        }}>
+                           Q-{index + 1}:
                         </div>
-                        <div className=" fs-3">{questions[index].question}</div>
+                        <div style={{
+                           fontSize: 'clamp(1.1rem, 2vw, 1.25rem)',
+                           fontWeight: 600,
+                           color: '#f0f6fc',
+                           lineHeight: 1.6
+                        }}>
+                           {questions[index].question}
+                        </div>
                      </div>
-                     <div className="m-4 fs-4">
-                        <ul style={{ listStyle: "none" }}>
-                           <li>
+
+                     <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 'var(--spacing-md)'
+                     }}>
+                        {[1, 2, 3, 4].map((optionNum) => (
+                           <div key={optionNum} style={{
+                              padding: 'var(--spacing-md)',
+                              borderRadius: 'var(--radius-lg)',
+                              border: answers[index + 1] === String(optionNum)
+                                 ? '2px solid #1f6feb'
+                                 : '2px solid rgba(31, 110, 235, 0.3)',
+                              backgroundColor: answers[index + 1] === String(optionNum)
+                                 ? 'rgba(31, 110, 235, 0.1)'
+                                 : 'transparent',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 'var(--spacing-md)',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease'
+                           }}>
                               <input
                                  onChange={() => {
-                                    handleChange(index, "1");
+                                    handleChange(index, String(optionNum));
                                  }}
-                                 id="option1"
+                                 id={`option${optionNum}`}
                                  type="radio"
-                                 checked={answers[index + 1] === "1"}
+                                 checked={answers[index + 1] === String(optionNum)}
                                  name="answer"
-                                 className="border border-4 border-secondary"
                                  style={{
-                                    transform: "scale(2)",
-                                    WebkitTransform: "scale(2)",
-                                    cursor: "pointer",
-                                    boxShadow: "none",
+                                    cursor: 'pointer',
+                                    width: '20px',
+                                    height: '20px',
+                                    accentColor: '#1f6feb'
                                  }}
                               />
-                              <span className="ms-3">
-                                 <label htmlFor="option1">{questions[index].option1}</label>
-                              </span>
-                           </li>
-                           <li>
-                              <input
-                                 onChange={() => {
-                                    handleChange(index, "2");
-                                 }}
-                                 id="option2"
-                                 type="radio"
-                                 checked={answers[index + 1] === "2"}
-                                 name="answer"
-                                 className="border border-4 border-secondary"
-                                 style={{
-                                    transform: "scale(2)",
-                                    WebkitTransform: "scale(2)",
-                                    cursor: "pointer",
-                                    boxShadow: "none",
-                                 }}
-                              />
-                              <span className="ms-3">
-                                 <label htmlFor="option2">{questions[index].option2}</label>
-                              </span>
-                           </li>
-                           <li>
-                              <input
-                                 onChange={() => {
-                                    handleChange(index, "3");
-                                 }}
-                                 id="option3"
-                                 type="radio"
-                                 checked={answers[index + 1] === "3"}
-                                 name="answer"
-                                 className="border border-4 border-secondary"
-                                 style={{
-                                    transform: "scale(2)",
-                                    WebkitTransform: "scale(2)",
-                                    cursor: "pointer",
-                                    boxShadow: "none",
-                                 }}
-                              />
-                              <span className="ms-3">
-                                 <label htmlFor="option3">{questions[index].option3}</label>
-                              </span>
-                           </li>
-                           <li>
-                              <input
-                                 onChange={() => {
-                                    handleChange(index, "4");
-                                 }}
-                                 id="option4"
-                                 type="radio"
-                                 name="answer"
-                                 checked={answers[index + 1] === "4"}
-                                 style={{
-                                    transform: "scale(2)",
-                                    WebkitTransform: "scale(2)",
-                                    cursor: "pointer",
-                                    boxShadow: "none",
-                                 }}
-                              />
-                              <span className="ms-3">
-                                 <label htmlFor="option4">{questions[index].option4}</label>
-                              </span>
-                           </li>
-                        </ul>
+                              <label htmlFor={`option${optionNum}`} style={{
+                                 fontSize: 'clamp(0.95rem, 1.5vw, 1rem)',
+                                 cursor: 'pointer',
+                                 margin: 0,
+                                 flex: 1
+                              }}>
+                                 {questions[index][`option${optionNum}`]}
+                              </label>
+                           </div>
+                        ))}
                      </div>
                   </div>
                </div>
-               <div
-                  className="d-flex justify-content-center align-items-center bg-secondary-subtle text-dark"
-                  style={{ height: "25vh" }}
-               >
-                  <button
-                     className={`fs-2 ${index === 0 ? "d-none" : ""} me-5 p-0`}
-                     style={{
-                        background: "none",
-                        border: "0",
-                     }}
-                     onClick={(e) => {
-                        e.preventDefault();
-                        setIndex(index - 1);
-                     }}
-                  >
-                                           <i className="bi bi-caret-left "></i>
+
+               <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 'var(--spacing-lg)',
+                  padding: 'var(--spacing-xl)',
+                  borderTop: '2px solid rgba(31, 110, 235, 0.2)',
+                  flexWrap: 'wrap'
+               }}>
+                  {index > 0 && (
+                     <button
+                        style={{
+                           background: 'none',
+                           border: '0',
+                           fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                           color: '#79c0ff',
+                           cursor: 'pointer',
+                           padding: 'var(--spacing-sm)',
+                           transition: 'all 0.3s ease'
+                        }}
+                        onClick={(e) => {
+                           e.preventDefault();
+                           setIndex(index - 1);
+                        }}
+                     >
+                        ← Previous
+                     </button>
+                  )}
+                  <button className="btn btn-success" onClick={submitQuiz} style={{
+                     padding: '0.75rem 1.5rem',
+                     fontSize: 'clamp(0.95rem, 1.3vw, 1rem)',
+                     fontWeight: 600,
+                     borderRadius: 'var(--radius-lg)'
+                  }}>
+                     ✓ Submit
                   </button>
-                  <button className="btn btn-success fs-4 me-5" onClick={submitQuiz}>
-                     Submit
+                  <button className="btn btn-warning" onClick={(e) => {
+                     e.preventDefault();
+                     handleChange(index, null);
+                  }} style={{
+                     padding: '0.75rem 1.5rem',
+                     fontSize: 'clamp(0.95rem, 1.3vw, 1rem)',
+                     fontWeight: 600,
+                     borderRadius: 'var(--radius-lg)',
+                     color: '#000'
+                  }}>
+                     ↻ Reset
                   </button>
-                  <button
-                     className="btn btn-danger fs-4 me-5"
-                     onClick={(e) => {
-                        e.preventDefault();
-                        handleChange(index, null);
-                     }}
-                  >
-                     Reset
-                  </button>
-                  <button
-                     className={`fs-2 ${index === questions.length - 1 ? "d-none" : ""} m-0`}
-                     style={{
-                        background: "none",
-                        border: "0",
-                     }}
-                     onClick={(e) => {
-                        e.preventDefault();
-                        setIndex(index + 1);
-                     }}
-                  >
-                                           <i className="bi bi-caret-right "></i>
-                  </button>
+                  {index < questions.length - 1 && (
+                     <button
+                        style={{
+                           background: 'none',
+                           border: '0',
+                           fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                           color: '#79c0ff',
+                           cursor: 'pointer',
+                           padding: 'var(--spacing-sm)',
+                           transition: 'all 0.3s ease'
+                        }}
+                        onClick={(e) => {
+                           e.preventDefault();
+                           setIndex(index + 1);
+                        }}
+                     >
+                        Next →
+                     </button>
+                  )}
                </div>
             </div>
          )}
          {responseData !== undefined && (
-            <div className="submit-response">
-               <div className="d-flex flex-column justify-content-center align-items-center p-5 bg-info border-3 rounded-5">
-                  <h2 className=" text-light fw-bold">
-                     Total Score: {`${responseData.points} / ${responseData.totalPoints}`}
+            <div style={{
+               position: 'fixed',
+               top: 0,
+               left: 0,
+               width: '100%',
+               height: '100%',
+               backgroundColor: 'rgba(0, 0, 0, 0.8)',
+               display: 'flex',
+               justifyContent: 'center',
+               alignItems: 'center',
+               zIndex: 1000
+            }}>
+               <div style={{
+                  maxWidth: '420px',
+                  width: '90%',
+                  padding: 'var(--spacing-xl)',
+                  backgroundColor: '#0d1117',
+                  borderRadius: 'var(--radius-2xl)',
+                  border: '2px solid #3fb950',
+                  boxShadow: '0 20px 60px rgba(63, 185, 80, 0.3)',
+                  textAlign: 'center'
+               }}>
+                  <h2 style={{
+                     fontSize: 'clamp(1.5rem, 3vw, 1.75rem)',
+                     fontWeight: 700,
+                     marginBottom: 'var(--spacing-md)',
+                     color: '#3fb950'
+                  }}>
+                     ✓ Quiz Submitted!
                   </h2>
-                  <button className="btn btn-success fs-4 m-4" onClick={proceedQuiz}>
-                     Proceed
+                  <div style={{
+                     backgroundColor: 'rgba(63, 185, 80, 0.1)',
+                     border: '2px solid #3fb950',
+                     borderRadius: 'var(--radius-lg)',
+                     padding: 'var(--spacing-lg)',
+                     marginBottom: 'var(--spacing-lg)'
+                  }}>
+                     <p style={{
+                        fontSize: 'clamp(0.85rem, 1.2vw, 0.95rem)',
+                        color: '#8b949e',
+                        margin: '0 0 var(--spacing-sm) 0',
+                        textTransform: 'uppercase'
+                     }}>
+                        Total Score
+                     </p>
+                     <h3 style={{
+                        fontSize: 'clamp(2rem, 4vw, 2.25rem)',
+                        fontWeight: 800,
+                        color: '#3fb950',
+                        margin: 0
+                     }}>
+                        {responseData.points}/{responseData.totalPoints}
+                     </h3>
+                  </div>
+                  <button className="btn btn-success" onClick={proceedQuiz} style={{
+                     width: '100%',
+                     padding: '0.75rem',
+                     fontSize: 'clamp(0.95rem, 1.3vw, 1rem)',
+                     fontWeight: 600,
+                     borderRadius: 'var(--radius-lg)'
+                  }}>
+                     → Continue
                   </button>
                </div>
             </div>
