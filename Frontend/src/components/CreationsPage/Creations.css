@@ -1,0 +1,23 @@
+.quizzes li {
+   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+   padding: var(--spacing-md);
+   border-radius: var(--radius-lg);
+}
+
+.quizzes li:hover {
+   background: rgba(31, 110, 235, 0.1);
+   transform: translateX(8px);
+   cursor: pointer;
+   border-color: #1f6feb;
+}
+
+.quiz-details h4 {
+   font-weight: 700;
+   color: var(--text-primary);
+   margin-bottom: var(--spacing-sm);
+}
+
+.quiz-details span {
+   font-weight: 500;
+   color: var(--text-secondary);
+}

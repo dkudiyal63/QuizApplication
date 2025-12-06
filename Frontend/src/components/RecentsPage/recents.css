@@ -1,0 +1,24 @@
+.clicked {
+   background: linear-gradient(135deg, rgba(31, 110, 235, 0.2) 0%, rgba(56, 139, 253, 0.1) 100%);
+   border-left: 4px solid #1f6feb;
+   transform: translateX(4px);
+}
+
+.recents-container {
+   animation: fadeInUp 0.6s ease-out;
+}
+
+.recent-item {
+   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+   padding: var(--spacing-lg);
+   border-radius: var(--radius-lg);
+   border: 1px solid #3a4660;
+   background: rgba(22, 33, 62, 0.5);
+   backdrop-filter: blur(10px);
+}
+
+.recent-item:hover {
+   transform: translateY(-4px);
+   box-shadow: 0 4px 12px rgba(31, 110, 235, 0.2);
+   border-color: #1f6feb;
+}
