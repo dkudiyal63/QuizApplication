@@ -1,14 +1,13 @@
 package com.application.services;
 
-import com.google.genai.Client;
-import com.google.genai.types.GenerateContentResponse;
 import com.application.dto.AiQuizRequest;
 import com.application.models.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,46 +17,23 @@ public class AiQuizService {
 
     private static final Logger logger = LoggerFactory.getLogger(AiQuizService.class);
 
-    @Value("${gemini.api.key:}")
-    private String geminiApiKey;
+    private final OllamaChatModel chatModel;
 
-    // It's generally better to inject a RestTemplate bean, but this is functional.
-    private final RestTemplate restTemplate = new RestTemplate();
-    private static final String GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent";
+    public AiQuizService(OllamaChatModel chatModel) {
+        this.chatModel = chatModel;
+    }
 
     public List<Question> generateQuiz(AiQuizRequest request) {
 
-        Client client = Client.builder().apiKey(geminiApiKey).build();
+        ChatResponse response = chatModel.call(new Prompt(buildPrompt(request)));
 
-        GenerateContentResponse response = client.models.generateContent(
-                "gemini-2.0-flash",
-                buildPrompt(request,10),
-                null
-        );
-        List<Question> questions = parseQuizResponse(response.text());
+        List<Question> questions = parseQuizResponse(response.getResult().getOutput().getText());
         return questions;
 
     }
 
-
-    private String buildPrompt(AiQuizRequest request, int numberOfQuestions) {
-        // --- FIX 1: Made the number of questions a parameter to ensure consistency.
-        return String.format(
-                "Generate a quiz with %d multiple choice questions for %s level, %s difficulty, on the subject '%s' and topic '%s'. "
-                        +
-                        "Format the response exactly as follows, with no introductory or concluding text:\n\n" +
-                        "Q1. [Question text]\n" +
-                        "A) [Option A]\n" +
-                        "B) [Option B]\n" +
-                        "C) [Option C]\n" +
-                        "D) [Option D]\n" +
-                        "Correct: [A/B/C/D]\n" +
-                        "Points: 1\n\n" +
-                        "Q2. [Question text]\n" +
-                        "...\n" +
-                        "Continue this exact format for all %d questions.",
-                numberOfQuestions, request.getGrade(), request.getDifficulty(), request.getSubject(), request.getTopic(),
-                numberOfQuestions);
+    private String buildPrompt(AiQuizRequest request) {
+        return String.format("Generate a quiz with %d multiple choice questions for %s level, %s difficulty, on the subject '%s'. " + "Format the response exactly as follows, with no code snippets questions, no introductory or concluding text:\n\n" + "Q1. [Question text]\n" + "A) [Option A]\n" + "B) [Option B]\n" + "C) [Option C]\n" + "D) [Option D]\n" + "Correct: [A/B/C/D]\n" + "Points: 1\n\n" + "Q2. [Question text]\n" + "...\n" + "Continue this exact format for all %d questions.", Integer.parseInt(request.getNumberOfQuestions()), request.getGrade(), request.getDifficulty(), request.getSubject(), Integer.parseInt(request.getNumberOfQuestions()));
     }
 
     private List<Question> parseQuizResponse(String content) {

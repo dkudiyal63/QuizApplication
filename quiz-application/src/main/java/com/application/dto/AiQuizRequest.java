@@ -4,16 +4,16 @@ public class AiQuizRequest {
     private String grade;
     private String difficulty;
     private String subject;
-    private String topic;
+    private String numberOfQuestions;
 
     public AiQuizRequest() {
     }
 
-    public AiQuizRequest(String grade, String difficulty, String subject, String topic) {
+    public AiQuizRequest(String grade, String difficulty, String subject, String numberOfCuqestions) {
         this.grade = grade;
         this.difficulty = difficulty;
         this.subject = subject;
-        this.topic = topic;
+        this.numberOfQuestions = numberOfCuqestions;
     }
 
     public String getGrade() {
@@ -40,11 +40,11 @@ public class AiQuizRequest {
         this.subject = subject;
     }
 
-    public String getTopic() {
-        return topic;
+    public String getNumberOfQuestions() {
+        return numberOfQuestions;
     }
 
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public void setNumberOfQuestions(String numberOfQuestions) {
+        this.numberOfQuestions = numberOfQuestions;
     }
 }

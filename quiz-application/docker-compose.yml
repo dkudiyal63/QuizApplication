@@ -32,16 +32,43 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/quiz_db
       SPRING_DATASOURCE_USERNAME: quizuser
       SPRING_DATASOURCE_PASSWORD: quizpassword
-      GEMINI_API_KEY: AIzaSyB-yosKLnWrk5VkSULFgy2fmxRdPFuMPto
       JWT_SECRET: c1094ad6ef126269ea41015bb836c82ff886080572ec2ddc47dea2c9ffb02c37
     ports:
       - "8082:8080"
     depends_on:
       mysql:
         condition: service_healthy
+      ollama:
+        condition: service_healthy
     networks:
       - quiz-network
     restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    build:
+      context: .
+      dockerfile: ollama.DockerFile
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:11434/api/tags" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
 
 networks:
   quiz-network:
@@ -49,4 +76,6 @@ networks:
 
 volumes:
   mysql_data:
+    driver: local
+  ollama_data:
     driver: local
