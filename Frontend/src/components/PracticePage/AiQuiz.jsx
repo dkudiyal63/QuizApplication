@@ -36,7 +36,7 @@ const AiQuiz = () => {
                grade,
                difficulty,
                subject,
-               count: n,
+               numberOfQuestions: n,
             }),
          });
 
